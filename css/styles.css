@@ -125,6 +125,10 @@ label {
     content:"$";
 }
 
+.percentage::after {
+    content:"%";
+}
+
 .left {
     text-align: left;
 }
