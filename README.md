@@ -96,7 +96,8 @@ Open package.json in your code editor, and add a webpack script (right after the
 In the es6-tutorial directory, create a new file named `webpack.config.js` defined as follows:
 
 
- `var path = require('path');
+ ```
+ var path = require('path');
  var webpack = require('webpack');
 
  module.exports = {
@@ -120,7 +121,8 @@ In the es6-tutorial directory, create a new file named `webpack.config.js` defin
          colors: true
      },
      devtool: 'source-map'
- };`
+ };
+ ```
 
 ## Build Using Webpack
 
