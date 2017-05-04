@@ -2,7 +2,7 @@
 
 Start the tutorial [here](http://ccoenraets.github.io/es6-tutorial).
 
-###Set Up Babel
+### Set Up Babel
 
 As you just saw, the current version of the application runs in current browsers without compilation: it is written in pure ECMAScript 5. In this section, we set up Babel so that we can start using ECMAScript 6 features in the next unit.
 
@@ -42,7 +42,7 @@ Open package.json in your favorite code editor. In the scripts section, remove t
 
 In the es6-tutorial directory, create a build directory to host the compiled version of the application.
 
-###Build and Run
+### Build and Run
 
 On the command line, make sure you are in the es6-tutorial directory, and type the following command to run the babel script and compile main.js:
 
@@ -70,3 +70,62 @@ Open a browser and access http://localhost:8080
 Click the Calculate button to calculate the monthly payment for the mortgage.
 
 Open build/main.bundle.js in your code editor and notice that the generated code is virtually identical to the source code (js/main.js). This is because the current code in main.js doesn’t include any ECMAScript 6 feature. With this setup in place, we are now ready to start using ECMAScript 6 features in the next unit.
+
+
+# Setting Up Webpack
+
+
+Modules have been available in JavaScript through third-party libraries. ECMAScript 6 adds native support for modules to JavaScript. When you compile a modular ECMAScript 6 application to ECMASCript 5, the compiler relies on a third party library to implement modules in ECMAScript 5. Webpack and Browserify are two popular options, and Babel supports both (and others). We use Webpack in this tutorial.
+
+In this unit, you add Webpack to your development environment.
+
+### Set Up Webpack
+
+On the command line, make sure you are in the es6-tutorial directory and install the babel-loader and webpack modules:
+
+`npm install babel-loader webpack --save-dev`
+
+Open package.json in your code editor, and add a webpack script (right after the babel script). The scripts section should now look like this:
+
+`"scripts": {
+    "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
+    "start": "http-server",
+    "webpack": "webpack"
+},`
+
+In the es6-tutorial directory, create a new file named `webpack.config.js` defined as follows:
+
+
+ `var path = require('path');
+ var webpack = require('webpack');
+
+ module.exports = {
+     entry: './js/main.js',
+     output: {
+         path: path.resolve(__dirname, 'build'),
+         filename: 'main.bundle.js'
+     },
+     module: {
+         loaders: [
+             {
+                 test: /\.js$/,
+                 loader: 'babel-loader',
+                 query: {
+                     presets: ['es2015']
+                 }
+             }
+         ]
+     },
+     stats: {
+         colors: true
+     },
+     devtool: 'source-map'
+ };`
+
+## Build Using Webpack
+
+On the command line, make sure you are in the es6-tutorial directory and type the following command:
+
+npm run webpack
+Webpack uses Babel behind the scenes to compile your application. You can build an application using Webpack even if that application is not using ECMAScript 6 modules. In other words, the babel script in package.json is not needed anymore.
+Open a browser, access http://localhost:8080, and click the Calculate button.
